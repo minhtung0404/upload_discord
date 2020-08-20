@@ -3,7 +3,7 @@
 
 ## Description
 
-A bot can upload all your file in your folders to a channel in discord.
+A bot can upload all your images in your folders to a channel in discord.
 
 ## Requirement
 
@@ -22,8 +22,11 @@ A bot can upload all your file in your folders to a channel in discord.
     "Path" : ["Path"]
 }
 ```
+- Create files.txt to know that what you have uploaded (it'll save your files' PATH)
 - Run `node index.js`
-- Run prefix + upload in the channel you need to upload file.
+- Run prefix + upload in the channel you need to upload images.
 
 ## Note
-I create this project to save my images to discord but it turned out that I don't have Discord Nitro so I can't upload images with high quality :(((.
+- I create this project to save my images to discord but it turned out that I don't have Discord Nitro so I can't upload images with high quality :(((.
+- You can change it to upload whatever you want by change `./commands/upload.js` file.
+- It will send your file and its path.
