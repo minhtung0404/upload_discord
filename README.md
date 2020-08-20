@@ -29,4 +29,4 @@ A bot can upload all your images in your folders to a channel in discord.
 ## Note
 - I create this project to save my images to discord but it turned out that I don't have Discord Nitro so I can't upload images with high quality :(((.
 - You can change it to upload whatever you want by change `./commands/upload.js` file.
-- It will send your file and its path.
+- It will send your files and its path.
