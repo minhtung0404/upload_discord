@@ -1,11 +1,8 @@
 const { Command } = require('discord-akairo');
 const { MessageAttachment } = require('discord.js');
 const fs = require('fs');
+const { Path } = require('../config.json');
 var isImage = require('is-image');
-
-let Path = [
-    '/home/minhtung0404/Pictures/nani/'
-]; // paths of folders containing images
 
 var walkSync = function(dir, filelist) {
     var fs = fs || require('fs'),
