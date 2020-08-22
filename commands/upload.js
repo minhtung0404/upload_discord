@@ -39,27 +39,15 @@ class UploadCommand extends Command {
     usage = "`upload [number of message]`\n`Default: 100 files`";
     example = "`upload 10`";
 
-    exec(message, args) {
+    async exec(message, args) {
         let images = [], uploaded = fs.readFileSync('./files.txt', 'utf8').split('\n');
 
         Path.forEach(function(path){
             walkSync(path, images);
         }); // read PATH of all images
 
-        //Prepare to write to file.txt
-        var file = fs.createWriteStream('./files.txt');
-        file.on('error', function(err){
-            if (err) throw err;
-        });
-
         //delete your command
         message.delete();
-
-        //add uploaded files to files.txt
-        for (let id in uploaded){
-            if (uploaded[id] === '') continue;
-            file.write(uploaded[id] + '\n');
-        }
 
         // upload your files
         for (let id = 0; id < images.length; id++){
@@ -69,15 +57,18 @@ class UploadCommand extends Command {
 
             // Send file
             let attachment = new MessageAttachment(images[id]);
-            message.channel.send(images[id], attachment).catch(err => {
+            await message.channel.send(images[id], attachment).catch(err => {
                 console.log(`Can't send your files`);
                 file.end();
                 return message.channel.send(`Fail to send files`);
             });
             console.log("Send " + images[id]);
 
-            // write it to files.txt
-            file.write(images[id] + '\n');
+            // append it to files.txt
+            fs.appendFileSync('files.txt', images[id] + '\n', function(err, ){
+                if (err) throw err;
+                console.log(`Save ${images[id]} into files.txt`);
+            });
 
             // check whether you have uploaded enough
             args.numberofMessage--;
@@ -86,11 +77,9 @@ class UploadCommand extends Command {
 
         if (args.numberofMessage > 0){
             console.log("Not enough files");
-            message.channel.send("Not enough files");
+            await message.channel.send("Not enough files");
         }
-
-        // close write on files.txt
-        file.end();
+        return 0;
     }
 }
 
